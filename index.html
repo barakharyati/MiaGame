@@ -121,6 +121,30 @@ byId('best').textContent = best;
 
 let width, height, state = 'home', lane, position, jump, distance, gap, clock, nextRow, obstacles, previous;
 let gesture;
+let catchTime = 0;
+const music = new Audio('audio/chase-music.mp3');
+const obstacleVoice = new Audio('audio/obstacle-he.mp3');
+const caughtVoice = new Audio('audio/caught-he.mp3');
+music.loop = true;
+music.volume = .22;
+
+function play(audio) {
+  return audio.play().catch(() => {});
+}
+
+function resetAudio(audio) {
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+function playObstacleVoice() {
+  obstacleVoice.currentTime = 0;
+  return play(obstacleVoice);
+}
+
+obstacleVoice.addEventListener('ended', () => {
+  if (state === 'caught') play(caughtVoice);
+});
 
 function resize() {
   const bounds = canvas.getBoundingClientRect();
@@ -135,6 +159,10 @@ new ResizeObserver(resize).observe(canvas);
 resize();
 
 function start() {
+  resetAudio(music);
+  resetAudio(obstacleVoice);
+  resetAudio(caughtVoice);
+  play(music);
   lane = position = 0;
   jump = distance = clock = 0;
   gap = 3;
@@ -158,13 +186,23 @@ function showDialog(title, detail, button) {
 function pause() {
   if (state !== 'running') return;
   state = 'paused';
+  music.pause();
+  resetAudio(obstacleVoice);
   showDialog('רגע לנשום', 'המרדף מחכה לכם.', 'ממשיכים');
+}
+
+function beginCatch() {
+  state = 'catching';
+  catchTime = 0;
+  music.pause();
+  hud.hidden = true;
 }
 
 function caught() {
   state = 'caught';
+  if (obstacleVoice.paused || obstacleVoice.ended) play(caughtVoice);
   overlay.classList.add('caught');
-  showDialog('פלאק! נועה תפסה את מיה!', 'נועה נתנה למיה פליק מצויר בטוסיק.\nהגעתם ל־' + Math.floor(distance) + ' מ׳.', 'מנסים שוב');
+  showDialog('פלאק! נועה תפסה את מיה!', 'נועה תפסה את מיה עם המערוך!\nהגעתם ל־' + Math.floor(distance) + ' מ׳.', 'מנסים שוב');
 }
 
 function move(action) {
@@ -193,7 +231,11 @@ function update(dt) {
     obstacle.depth += speed * dt;
     if (!obstacle.checked && obstacle.depth >= .73) {
       obstacle.checked = true;
-      if (Math.abs(position - obstacle.lane) < .42 && lift() < .38) gap--;
+      if (Math.abs(position - obstacle.lane) < .42 && lift() < .38) {
+        gap--;
+        playObstacleVoice();
+        if (gap === 0) break;
+      }
     }
   }
   obstacles = obstacles.filter(obstacle => obstacle.depth < 1.08);
@@ -206,7 +248,7 @@ function update(dt) {
   byId('gap').textContent = '●'.repeat(Math.max(0, gap)) + '○'.repeat(Math.min(3, 3 - gap));
   if (gap <= 0) {
     saveBest();
-    caught();
+    beginCatch();
   }
 }
 
@@ -369,19 +411,40 @@ function draw() {
   const scale = Math.min(width / 405,height / 510);
   const playerDepth = .73;
   const momDepth = Math.min(.95, playerDepth + .032 + gap * .058);
-  const momPosition = position * .60 + .52;
+  const swing = Math.min(1, catchTime / .58);
+  const momPosition = gap > 0 ? position * .60 + .52 : position + .65 - .44 * swing;
   const miaX = roadX(position,playerDepth);
   const miaY = roadY(playerDepth) - lift() * height * .15;
   const scene = obstacles.map(obstacle => ({depth:obstacle.depth,paint:() => drawObstacle(obstacle)}));
   scene.push({depth:playerDepth,paint:() => runner(miaX,miaY,scale,false,clock*18)});
   scene.push({depth:momDepth,paint:() => runner(roadX(momPosition,momDepth),roadY(momDepth),scale*1.14,true,clock*16)});
   scene.sort((a,b) => a.depth-b.depth).forEach(item => item.paint());
+  if (state === 'catching') {
+    const angle = -1.2 - 2.1 * Math.min(1, swing / .72);
+    ctx.save();
+    ctx.translate(roadX(momPosition,momDepth) + 8 * scale, miaY - 27 * scale);
+    ctx.rotate(angle);
+    line('#78462d', 6 * scale, [[0,0],[49 * scale,0]]);
+    line('#a56438', 15 * scale, [[10 * scale,0],[39 * scale,0]]);
+    line('#e7aa67', 9 * scale, [[10 * scale,-2 * scale],[38 * scale,-2 * scale]]);
+    ctx.restore();
+    if (swing >= .72) {
+      const size = 13 * scale;
+      const x = miaX + 9 * scale;
+      const y = miaY - 27 * scale;
+      polygon('#fff1aa', [[x-size,y],[x-size*.32,y-size*.28],[x,y-size],[x+size*.28,y-size*.23],[x+size,y],[x+size*.25,y+size*.25],[x,y+size],[x-size*.28,y+size*.25]]);
+    }
+  }
 }
 
 function frame(now) {
   const dt = Math.min(.05, (now - (previous ?? now)) / 1000);
   previous = now;
   if (state === 'running') update(dt);
+  if (state === 'catching') {
+    catchTime += dt;
+    if (catchTime >= .58) caught();
+  }
   draw();
   requestAnimationFrame(frame);
 }
@@ -392,12 +455,15 @@ byId('pause').addEventListener('click',pause);
 byId('resume').addEventListener('click',() => {
   if (state === 'caught') { start(); return; }
   state = 'running';
+  play(music);
   overlay.hidden = true;
   byId('pause').focus({preventScroll:true});
 });
 byId('home').addEventListener('click',() => {
   saveBest();
   state = 'home';
+  resetAudio(obstacleVoice);
+  resetAudio(caughtVoice);
   overlay.hidden = hud.hidden = true;
   intro.hidden = false;
   byId('start').focus({preventScroll:true});
