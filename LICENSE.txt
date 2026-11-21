@@ -1,0 +1,11 @@
+Mia Game — Image Use License
+Copyright © 2026. All rights reserved by the respective rights holders.
+
+This notice covers the illustrations, character artwork and other images published as part of Mia Game, including art.webp. It grants permission to view the images while playing the game, including the temporary technical copies needed for display.
+
+Except as permitted by applicable law or with prior written permission from the relevant rights holder, you may not deliberately download or save, capture, copy, redistribute, republish, modify, or otherwise reuse the images. Automated collection, scraping, and incorporation into datasets are prohibited. The images may not be used for AI or machine learning, including training, fine-tuning, evaluation, or as inputs for AI-generated content. Rights concerning text and data mining are expressly reserved where applicable. Applicable law and any rights granted under GitHub's terms continue to apply.
+
+רישיון שימוש בתמונות — Mia Game
+© 2026 כל הזכויות שמורות לבעלי הזכויות.
+
+מותר לצפות באיורים ובתמונות במסגרת המשחק, כולל עותקים זמניים הנדרשים להצגתם בדפדפן. ללא אישור מראש ובכתב מבעל הזכויות, או היתר לפי דין, אסור להוריד או לשמור את התמונות במכוון, לצלם אותן, להעתיק, להפיץ, לפרסם מחדש, לשנות או להשתמש בהן מחדש. האיסור כולל איסוף אוטומטי, הוספה למאגרי נתונים ושימוש בכלי AI, לרבות אימון, כוונון, הערכה והזנת התמונות לכלים ליצירת תוכן. הזכויות לכריית טקסט ונתונים שמורות ככל שהדין מאפשר. הדין החל וזכויות שמוקנות בתנאי GitHub ממשיכים לחול.

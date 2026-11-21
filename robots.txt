@@ -1,0 +1,3 @@
+# For GitHub Pages under barakharyati.github.io, serve these rules from the hostname's /robots.txt.
+User-agent: *
+Disallow: /MiaGame/
