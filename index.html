@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7ecd8">
+<title>Mia Game | המרדף במדבר</title>
+<link rel="stylesheet" href="style.css">
+<script src="game.js" defer></script>
+</head>
+<body>
+<main>
+<header>
+  <a class="brand" href="./" dir="ltr"><span class="mark">M</span> MIA GAME</a>
+  <span class="record">שיא אישי <b id="best">0</b></span>
+</header>
+<section class="stage" aria-label="המרדף במדבר">
+  <canvas id="track" aria-label="מסלול המרדף"></canvas>
+  <div id="intro">
+    <div class="hero-copy">
+      <span class="eyebrow">המרדף במדבר</span>
+      <h1 dir="ltr">MIA<span>GAME</span></h1>
+      <p>מיה רצה. נועה בעקבותיה.<br>כמה רחוק תצליחו לברוח?</p>
+      <button class="primary" id="start">מתחילים לרוץ <span aria-hidden="true">◀</span></button>
+    </div>
+  </div>
+  <div id="hud" hidden><span>מרחק <b id="distance">0</b> מ׳</span><span>מרווח <b id="gap"></b></span><button id="pause" aria-label="השהיה">Ⅱ</button></div>
+  <div id="overlay" hidden>
+    <div class="dialog">
+      <h2 id="result"></h2>
+      <p id="detail"></p>
+      <button class="primary" id="resume"></button>
+      <button id="home" class="secondary">חזרה לפתיחה</button>
+    </div>
+  </div>
+</section>
+<nav class="controls" aria-label="שליטה במשחק">
+  <div class="hint"><strong>איך משחקים?</strong><span>החליפו מסלולים וקפצו מעל מכשולים</span></div>
+  <div class="keys" dir="ltr">
+    <button data-action="left" aria-label="מסלול שמאלי">←</button>
+    <button data-action="jump" aria-label="קפיצה">↑</button>
+    <button data-action="right" aria-label="מסלול ימני">→</button>
+  </div>
+  <span class="desktop-tip">חצים לזוז <i>·</i> רווח לקפוץ</span>
+  <span class="touch-tip">החליקו על המסלול או לחצו על החצים</span>
+</nav>
+</main>
+</body>
+</html>
