@@ -9,7 +9,7 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 .record b{color:var(--teal);font-variant-numeric:tabular-nums}
 .stage{position:relative;isolation:isolate;height:clamp(410px,65vh,640px);border:2px solid var(--ink);border-radius:26px;overflow:hidden;box-shadow:0 7px var(--ink);background:#f6b57b;touch-action:none}
 canvas,#intro,#overlay{position:absolute;inset:0;width:100%;height:100%}
-#intro{background:linear-gradient(90deg,#ffe2aa 0%,#ffe1aaeb 26%,#ffdfaa28 53%,transparent 70%);display:flex;align-items:center;justify-content:flex-end;padding:clamp(24px,6vw,76px)}
+#intro{background:linear-gradient(90deg,#ffe2aa 0%,#ffe1aaeb 26%,#ffdfaa28 53%,transparent 70%),url('art.webp') center 54% / cover no-repeat;display:flex;align-items:center;justify-content:flex-end;padding:clamp(24px,6vw,76px)}
 .hero-copy{text-align:left;width:fit-content}
 .eyebrow{font-weight:800;color:#185e58;background:#fff0ce;border:1px solid #b57e52;border-radius:30px;padding:6px 12px;display:inline-block}
 h1{font-family:Impact,'Arial Black',sans-serif;font-weight:950;font-size:clamp(65px,10.5vw,150px);font-style:italic;line-height:.76;letter-spacing:-.065em;margin:20px 9px 24px 0;color:#27202d}
@@ -31,7 +31,7 @@ i{font-style:normal;padding:0 4px}.touch-tip{display:none}
 .dialog h2{margin:0;font-size:clamp(27px,5vw,46px)}.dialog p{white-space:pre-line;line-height:1.5}.secondary{display:block;margin:16px auto 0;border:0;background:none;text-decoration:underline}
 [hidden]{display:none!important}
 @media(pointer:coarse){.desktop-tip{display:none}.touch-tip{display:block}}
-@media(max-width:640px){main{width:calc(100% - 24px);padding:14px 0}.stage{height:clamp(365px,64svh,570px);border-radius:18px}header{margin-bottom:13px}#intro{background:linear-gradient(0deg,#ffe3a9 0%,#ffe3a9ed 26%,transparent 61%);align-items:flex-end;padding:17px 20px}.hero-copy{width:100%;text-align:right}.eyebrow{font-size:.76rem;padding:4px 8px}h1{font-size:clamp(44px,13vw,75px);margin:10px 0 8px;text-align:left;width:fit-content}h1 span{display:inline;margin-left:7px}.hero-copy p{margin:0 0 8px;font-size:.95rem}.hero-copy p br{display:none}.primary{padding:8px 15px}.controls{padding:9px;flex-wrap:wrap;gap:10px;margin-top:17px}.hint span{display:none}.desktop-tip,.touch-tip{flex-basis:100%;text-align:center}}
+@media(max-width:640px){main{width:calc(100% - 24px);padding:14px 0}.stage{height:clamp(365px,64svh,570px);border-radius:18px}header{margin-bottom:13px}#intro{background:linear-gradient(0deg,#ffe3a9 0%,#ffe3a9ed 26%,transparent 61%),url('art.webp') 75% top / auto 79% no-repeat;align-items:flex-end;padding:17px 20px}.hero-copy{width:100%;text-align:right}.eyebrow{font-size:.76rem;padding:4px 8px}h1{font-size:clamp(44px,13vw,75px);margin:10px 0 8px;text-align:left;width:fit-content}h1 span{display:inline;margin-left:7px}.hero-copy p{margin:0 0 8px;font-size:.95rem}.hero-copy p br{display:none}.primary{padding:8px 15px}.controls{padding:9px;flex-wrap:wrap;gap:10px;margin-top:17px}.hint span{display:none}.desktop-tip,.touch-tip{flex-basis:100%;text-align:center}}
 #overlay.caught .dialog{animation:pop-in .3s cubic-bezier(.2,.85,.25,1.25) both}
 @keyframes pop-in{from{transform:rotate(-8deg) scale(.76);opacity:.2}to{transform:rotate(0) scale(1);opacity:1}}
 @media(prefers-reduced-motion:reduce){#overlay.caught .dialog{animation:none}}
